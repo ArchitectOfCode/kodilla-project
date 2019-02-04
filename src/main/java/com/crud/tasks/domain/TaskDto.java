@@ -9,8 +9,4 @@ public class TaskDto {
     private Long id;
     private String title;
     private String content;
-
-    public void show(){
-        System.out.println();
-    }
 }
