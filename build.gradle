@@ -12,6 +12,8 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+// Uncomment below line to create war file
+apply plugin: 'war'
 
 group = 'com.crud'
 version = '0.0.1-SNAPSHOT'
@@ -29,4 +31,7 @@ dependencies {
 	compile('mysql:mysql-connector-java')
 
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+	// Uncomment below line to create WAR file (remember to rebuild gradle!)
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }
