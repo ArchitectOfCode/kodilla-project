@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Entity(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue//(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name")
