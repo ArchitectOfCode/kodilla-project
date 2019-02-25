@@ -13,7 +13,7 @@ public class DbService {
     @Autowired
     private TaskRepository repository;
 
-    public List<Task> getAllTasks2() {
+    public List<Task> getAllTasks() {
         return repository.findAll();
     }
 
