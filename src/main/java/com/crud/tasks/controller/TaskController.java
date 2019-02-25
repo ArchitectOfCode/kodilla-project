@@ -20,9 +20,9 @@ public class TaskController {
     @Autowired
     private TaskMapper taskMapper;
 
-    @RequestMapping(method = RequestMethod.GET, value = "getTasks")
+    @RequestMapping(method = RequestMethod.GET, value = "getTasks2")
     public List<TaskDto> getTasks() {
-        return taskMapper.mapToTaskDtoList(service.getAllTasks());
+        return taskMapper.mapToTaskDtoList(service.getAllTasks2());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTask")
