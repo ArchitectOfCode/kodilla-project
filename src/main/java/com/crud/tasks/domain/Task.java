@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue//(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
