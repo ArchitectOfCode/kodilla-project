@@ -16,6 +16,15 @@ public class SimpleEmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    // Sending simple e-mail for e-mail settings verification
+    /*public void sendSimpleMessage(String to, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        javaMailSender.send(message);
+    }*/
+
     public void send(final Mail mail) {
         LOGGER.info("Starting e-mail preparation...");
         try {
