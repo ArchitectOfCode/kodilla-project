@@ -12,7 +12,10 @@ import javax.persistence.*;
 @Entity(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    // PostgreeSQL version
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    // MySQL version
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name")
