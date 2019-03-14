@@ -28,6 +28,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
 	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-mail:1.5.7.RELEASE')
 	// To use Heroku set parameters also in application.properties
 	compile('mysql:mysql-connector-java')
 	//compile('org.postgresql:postgresql')
