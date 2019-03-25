@@ -1,6 +1,7 @@
 package com.crud.tasks.trello.facade;
 
 import com.crud.tasks.domain.*;
+import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.service.TrelloService;
 import com.crud.tasks.trello.validator.TrelloValidator;
@@ -23,6 +24,9 @@ public class TrelloFacadeTest {
     @InjectMocks
     private TrelloFacade trelloFacade;
 
+    @InjectMocks
+    private TaskMapper taskMapper;
+
     @Mock
     private TrelloService trelloService;
 
@@ -31,6 +35,52 @@ public class TrelloFacadeTest {
 
     @Mock
     private TrelloMapper trelloMapper;
+
+    @Test
+    public void testMapToTask() {
+        //Given
+        TaskDto taskDto = new TaskDto(1L, "Task", "Content");
+
+        //When
+        Task task = taskMapper.mapToTask(taskDto);
+
+        //Then
+        assertEquals((Long)1L, task.getId());
+        assertEquals("Task", task.getTitle());
+        assertEquals("Content", task.getContent());
+    }
+
+    @Test
+    public void testMapToTaskDto() {
+        //Given
+        Task task = new Task(1L, "Task", "Content");
+
+        //When
+        TaskDto taskDto = taskMapper.mapToTaskDto(task);
+
+        //Then
+        assertEquals((Long)1L, taskDto.getId());
+        assertEquals("Task", taskDto.getTitle());
+        assertEquals("Content", taskDto.getContent());
+    }
+
+    @Test
+    public void testMapToTaskListDto() {
+        //Given
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(new Task(1L, "Task 1", "Content 1"));
+        taskList.add(new Task(2L, "Task 2", "Content 2"));
+
+        //When
+        List<TaskDto> taskListDto = taskMapper.mapToTaskListDto(taskList);
+        taskList.remove(taskList.get(1));
+
+        //Then
+        assertEquals(2, taskListDto.size());
+        assertEquals((Long)1L, taskListDto.get(0).getId());
+        assertEquals("Task 1", taskListDto.get(0).getTitle());
+        assertEquals("Content 1", taskListDto.get(0).getContent());
+    }
 
     @Test
     public void shouldFetchEmptyTrelloBoards() {
@@ -123,7 +173,6 @@ public class TrelloFacadeTest {
                 new CreatedTrelloCardDto("id", "name", "URL", trelloBadgeDto);
 
         when(trelloFacade.createCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
-        //when(trelloService.createTrelloCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
 
         //When
         CreatedTrelloCardDto fetchedTrelloCardDto = trelloFacade.createCard(trelloCardDto);

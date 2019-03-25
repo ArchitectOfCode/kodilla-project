@@ -53,7 +53,7 @@ public class TaskMapperTest {
         taskList.add(new Task(2L, "title2", "content2"));
 
         // When
-        List<TaskDto> taskDtoList = taskMapper.mapToTaskDtoList(taskList);
+        List<TaskDto> taskDtoList = taskMapper.mapToTaskListDto(taskList);
 
         // Then
         assertEquals(2, taskDtoList.size());
