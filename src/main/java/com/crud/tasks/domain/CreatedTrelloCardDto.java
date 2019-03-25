@@ -1,4 +1,4 @@
-package com.crud.tasks.mapper;
+package com.crud.tasks.domain;
 
 import com.crud.tasks.domain.TrelloBadgeDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
-public class CreatedTrelloCard {
+public class CreatedTrelloCardDto {
     @JsonProperty("id")
     private String id;
 
