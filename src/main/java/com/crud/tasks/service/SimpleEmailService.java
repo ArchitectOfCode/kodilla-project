@@ -30,23 +30,42 @@ public class SimpleEmailService {
         javaMailSender.send(message);
     }*/
 
-    public void send(final Mail mail) {
+    public void send(final Mail mail, final String link) {
         LOGGER.info("Starting e-mail preparation...");
         try {
-            /*javaMailSender.send(createMailMessage(mail));*/
-            javaMailSender.send(createMimeMessage(mail));
+            /*javaMailSender.send(createMailMessage(mail));*/   // Old version used in old tests
+            javaMailSender.send(createMimeMessage(mail, link));
             LOGGER.info("E-mail has been sent.");
         } catch (MailException me) {
             LOGGER.error("Failed to process e-mail sending: ", me.getMessage(), me);
         }
     }
 
-    private MimeMessagePreparator createMimeMessage(final Mail mail) {
+    public void sendCurrentlyInDatabase(final Mail mail) {
+        LOGGER.info("Starting e-mail preparation...");
+        try {
+            javaMailSender.send(createMimeCurrentlyInDatabaseMessage(mail));
+            LOGGER.info("E-mail has been sent.");
+        } catch (MailException me) {
+            LOGGER.error("Failed to process e-mail sending: ", me.getMessage(), me);
+        }
+    }
+
+    private MimeMessagePreparator createMimeMessage(final Mail mail, final String link) {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
             messageHelper.setSubject(mail.getSubject());;
-            messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+            messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage(), link), true);
+        };
+    }
+
+    private MimeMessagePreparator createMimeCurrentlyInDatabaseMessage(final Mail mail) {
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setTo(mail.getMailTo());
+            messageHelper.setSubject(mail.getSubject());;
+            messageHelper.setText(mailCreatorService.buildCurrentlyInDatabaseEmail(mail.getMessage()), true);
         };
     }
 

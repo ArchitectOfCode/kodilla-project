@@ -26,7 +26,7 @@ public class EmailScheduler {
     public void sendInformationEmail() {
         long size = taskRepository.count();
         String message = "Currently in database you got: " + size;
-        simpleEmailService.send(new Mail(
+        simpleEmailService.sendCurrentlyInDatabase(new Mail(
                 adminConfig.getAdminMail(),
                 adminConfig.getAdminDeputyMail(),
                 SUBJECT,

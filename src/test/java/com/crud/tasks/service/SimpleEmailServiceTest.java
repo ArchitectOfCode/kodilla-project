@@ -20,6 +20,9 @@ public class SimpleEmailServiceTest {
     @Mock
     private JavaMailSender javaMailSender;
 
+    // To perform below old tests, set javaMailSender.send(createMailMessage(mail))
+    // instead javaMailSender.send(createMimeMessage(mail)) in SimpleEmailService.java
+    
     @Test
     public void shouldSendEmail() {
         // Given
