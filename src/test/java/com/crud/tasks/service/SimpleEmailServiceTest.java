@@ -21,7 +21,7 @@ public class SimpleEmailServiceTest {
     private JavaMailSender javaMailSender;
 
     // To perform below old tests, set javaMailSender.send(createMailMessage(mail))
-    // instead javaMailSender.send(createMimeMessage(mail)) in SimpleEmailService.java
+    // instead of javaMailSender.send(createMimeMessage(mail)) in SimpleEmailService.java
     
     @Test
     public void shouldSendEmail() {
@@ -38,10 +38,12 @@ public class SimpleEmailServiceTest {
         mailMessage.setText(mail.getMessage());
 
         // When
-        simpleEmailService.send(mail);
+        /*simpleEmailService.sendCurrentlyInDatabase(mail);*/
+        simpleEmailService.send(mail, "https://www.duckduckgo.com");
 
         // Then
-        verify(javaMailSender, times(1)).send(mailMessage);
+        /*verify(javaMailSender, times(1)).send(mailMessage);*/
+        verify(javaMailSender, times(1)).send(mailMessage, "https://www.duckduckgo.com");
     }
 
     @Test
@@ -59,7 +61,8 @@ public class SimpleEmailServiceTest {
         mailMessage.setText(mail.getMessage());
 
         // When
-        simpleEmailService.send(mail);
+        /*simpleEmailService.send(mail);*/
+        simpleEmailService.sendCurrentlyInDatabase(mail);
 
         // Then
         verify(javaMailSender, times(1)).send(mailMessage);
