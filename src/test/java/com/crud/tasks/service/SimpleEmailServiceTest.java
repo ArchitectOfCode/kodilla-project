@@ -15,6 +15,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -96,10 +99,37 @@ public class SimpleEmailServiceTest {
         mailMessage.setText(MAIL_MSG);
 
         // When
-        //simpleEmailService.send(mail);
         simpleEmailService.sendCurrentlyInDatabase(mail);
+        //simpleEmailService.send(mail, "https://www.duckduckgo.com");
 
         // Then
         verify(javaMailSender, times(1)).send(mailMessage);
+    }
+
+    @Test
+    public void shouldSendEmailThroughGreenMail() throws MessagingException, IOException {
+        // Given
+        Mail mail = new Mail(MAIL_TO, "", MAIL_SUBJECT, MAIL_MSG);
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(MAIL_TO);
+        if(!MAIL_CC.isEmpty() && MAIL_CC.length() > 0) {
+            mailMessage.setCc(MAIL_CC);
+        }
+        mailMessage.setSubject(MAIL_SUBJECT);
+        mailMessage.setText(MAIL_MSG);
+
+        // When
+        GreenMailUtil.sendTextEmailTest(MAIL_TO, "", MAIL_SUBJECT, MAIL_MSG);
+        //simpleEmailService.send(mail, "https://www.duckduckgo.com");
+
+        // Then
+        MimeMessage[] receivedMessages = greenMail.getReceivedMessages();
+        assertEquals(1, receivedMessages.length);
+
+        MimeMessage receivedMessage = receivedMessages[0];
+        assertEquals(receivedMessage.getAllRecipients()[0].toString(), MAIL_TO);
+        assertEquals(receivedMessage.getSubject(), MAIL_SUBJECT);
+        assertTrue(receivedMessage.getContent().toString().contains(MAIL_MSG));
     }
 }
