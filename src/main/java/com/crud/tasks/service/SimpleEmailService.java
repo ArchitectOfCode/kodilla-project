@@ -44,7 +44,8 @@ public class SimpleEmailService {
     public void sendCurrentlyInDatabase(final Mail mail) {
         LOGGER.info("Starting e-mail preparation...");
         try {
-            javaMailSender.send(createMimeCurrentlyInDatabaseMessage(mail));
+            javaMailSender.send(createMailMessage(mail));   // Old version used in old tests
+            /*javaMailSender.send(createMimeCurrentlyInDatabaseMessage(mail));*/
             LOGGER.info("E-mail has been sent.");
         } catch (MailException me) {
             LOGGER.error("Failed to process e-mail sending: ", me.getMessage(), me);
